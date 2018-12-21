@@ -11,8 +11,9 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class ArticleController
+class ArticleController extends AbstractController
 {
 
     /**
@@ -24,12 +25,20 @@ class ArticleController
     }
 
     /**
-     * @Route("/news/{id}/{slug}")
+     * @Route("/news/{slug}")
      */
-    public function show($slug, $id)
+    public function show($slug = null)
     {
-        return new Response(sprintf(
-            'Parametros: %s, %s', $slug, $id
-        ));
+
+        $comments = [
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.',
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.',
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.',
+        ];
+
+        return $this->render('article/show.html.twig', [
+            'title' => \ucwords(str_replace('-', ' ', $slug)),
+            'comments' => $comments
+        ]);
     }
 }
